@@ -1,0 +1,75 @@
+{
+  "language": "Python",
+  "project_shape": "backend",
+  "source_extensions": [
+    ".py"
+  ],
+  "build_command": "python3 -m compileall -q facetproof",
+  "testing": "deferred",
+  "workflow_checks": [
+    {
+      "workflow_id": "mesh-intake",
+      "command": "python3 -m facetproof.demo --flow mesh-intake"
+    },
+    {
+      "workflow_id": "mesh-retirement",
+      "command": "python3 -m facetproof.demo --flow mesh-retirement"
+    },
+    {
+      "workflow_id": "assembly-edit",
+      "command": "python3 -m facetproof.demo --flow assembly-edit"
+    },
+    {
+      "workflow_id": "lens-edit",
+      "command": "python3 -m facetproof.demo --flow lens-edit"
+    },
+    {
+      "workflow_id": "seal-closure",
+      "command": "python3 -m facetproof.demo --flow seal-closure"
+    },
+    {
+      "workflow_id": "exposure-submit",
+      "command": "python3 -m facetproof.demo --flow exposure-submit"
+    },
+    {
+      "workflow_id": "render-plates",
+      "command": "python3 -m facetproof.demo --flow render-plates"
+    },
+    {
+      "workflow_id": "cancel-exposure",
+      "command": "python3 -m facetproof.demo --flow cancel-exposure"
+    },
+    {
+      "workflow_id": "retry-exposure",
+      "command": "python3 -m facetproof.demo --flow retry-exposure"
+    },
+    {
+      "workflow_id": "verify-plate",
+      "command": "python3 -m facetproof.demo --flow verify-plate"
+    },
+    {
+      "workflow_id": "pixel-pick",
+      "command": "python3 -m facetproof.demo --flow pixel-pick"
+    },
+    {
+      "workflow_id": "compare-plates",
+      "command": "python3 -m facetproof.demo --flow compare-plates"
+    },
+    {
+      "workflow_id": "proof-decision",
+      "command": "python3 -m facetproof.demo --flow proof-decision"
+    },
+    {
+      "workflow_id": "quarantine-plate",
+      "command": "python3 -m facetproof.demo --flow quarantine-plate"
+    },
+    {
+      "workflow_id": "recover-lease",
+      "command": "python3 -m facetproof.demo --flow recover-lease"
+    },
+    {
+      "workflow_id": "export-bundle",
+      "command": "python3 -m facetproof.demo --flow export-bundle"
+    }
+  ]
+}

@@ -1,0 +1,447 @@
+{
+  "project_name": "solo-0032-facet-proof",
+  "project_shape": "backend",
+  "modules": [
+    {
+      "id": "algebra",
+      "path": "facetproof/algebra.py",
+      "responsibility": "algebra"
+    },
+    {
+      "id": "application",
+      "path": "facetproof/application.py",
+      "responsibility": "application"
+    },
+    {
+      "id": "assemblies",
+      "path": "facetproof/assemblies.py",
+      "responsibility": "assemblies"
+    },
+    {
+      "id": "blobs",
+      "path": "facetproof/blobs.py",
+      "responsibility": "blobs"
+    },
+    {
+      "id": "bundles",
+      "path": "facetproof/bundles.py",
+      "responsibility": "bundles"
+    },
+    {
+      "id": "camera",
+      "path": "facetproof/camera.py",
+      "responsibility": "camera"
+    },
+    {
+      "id": "clipping",
+      "path": "facetproof/clipping.py",
+      "responsibility": "clipping"
+    },
+    {
+      "id": "comparison",
+      "path": "facetproof/comparison.py",
+      "responsibility": "comparison"
+    },
+    {
+      "id": "database",
+      "path": "facetproof/database.py",
+      "responsibility": "database"
+    },
+    {
+      "id": "errors",
+      "path": "facetproof/errors.py",
+      "responsibility": "errors"
+    },
+    {
+      "id": "exposures",
+      "path": "facetproof/exposures.py",
+      "responsibility": "exposures"
+    },
+    {
+      "id": "illumination",
+      "path": "facetproof/illumination.py",
+      "responsibility": "illumination"
+    },
+    {
+      "id": "meshes",
+      "path": "facetproof/meshes.py",
+      "responsibility": "meshes"
+    },
+    {
+      "id": "passes",
+      "path": "facetproof/passes.py",
+      "responsibility": "passes"
+    },
+    {
+      "id": "pigments",
+      "path": "facetproof/pigments.py",
+      "responsibility": "pigments"
+    },
+    {
+      "id": "planner",
+      "path": "facetproof/planner.py",
+      "responsibility": "planner"
+    },
+    {
+      "id": "plates",
+      "path": "facetproof/plates.py",
+      "responsibility": "plates"
+    },
+    {
+      "id": "png",
+      "path": "facetproof/png.py",
+      "responsibility": "png"
+    },
+    {
+      "id": "proofs",
+      "path": "facetproof/proofs.py",
+      "responsibility": "proofs"
+    },
+    {
+      "id": "raster",
+      "path": "facetproof/raster.py",
+      "responsibility": "raster"
+    },
+    {
+      "id": "routing",
+      "path": "facetproof/routing.py",
+      "responsibility": "routing"
+    },
+    {
+      "id": "seals",
+      "path": "facetproof/seals.py",
+      "responsibility": "seals"
+    },
+    {
+      "id": "server",
+      "path": "facetproof/server.py",
+      "responsibility": "server"
+    },
+    {
+      "id": "shading",
+      "path": "facetproof/shading.py",
+      "responsibility": "shading"
+    },
+    {
+      "id": "values",
+      "path": "facetproof/values.py",
+      "responsibility": "values"
+    },
+    {
+      "id": "worker",
+      "path": "facetproof/worker.py",
+      "responsibility": "worker"
+    }
+  ],
+  "workflows": [
+    {
+      "id": "mesh-intake",
+      "name": "网格导入",
+      "entry": "HTTP /facet/v1 与 facetproof.demo mesh-intake",
+      "success": "非法面拒绝导入",
+      "failure": "拒绝违反规则的状态或输入，事务不提交",
+      "verification": "python3 -m facetproof.demo --flow mesh-intake",
+      "steps": [
+        "通过公开领域入口接收输入",
+        "执行领域规则与持久化或图版处理",
+        "返回可观察结果并检查失败路径"
+      ],
+      "module_ids": [
+        "meshes",
+        "algebra",
+        "database"
+      ]
+    },
+    {
+      "id": "mesh-retirement",
+      "name": "网格停用",
+      "entry": "HTTP /facet/v1 与 facetproof.demo mesh-retirement",
+      "success": "新冻结拒绝、旧图版不变",
+      "failure": "拒绝违反规则的状态或输入，事务不提交",
+      "verification": "python3 -m facetproof.demo --flow mesh-retirement",
+      "steps": [
+        "通过公开领域入口接收输入",
+        "执行领域规则与持久化或图版处理",
+        "返回可观察结果并检查失败路径"
+      ],
+      "module_ids": [
+        "meshes",
+        "seals",
+        "database"
+      ]
+    },
+    {
+      "id": "assembly-edit",
+      "name": "场景修订",
+      "entry": "HTTP /facet/v1 与 facetproof.demo assembly-edit",
+      "success": "过期修改返回冲突",
+      "failure": "拒绝违反规则的状态或输入，事务不提交",
+      "verification": "python3 -m facetproof.demo --flow assembly-edit",
+      "steps": [
+        "通过公开领域入口接收输入",
+        "执行领域规则与持久化或图版处理",
+        "返回可观察结果并检查失败路径"
+      ],
+      "module_ids": [
+        "assemblies",
+        "algebra",
+        "database"
+      ]
+    },
+    {
+      "id": "lens-edit",
+      "name": "镜头编排",
+      "entry": "HTTP /facet/v1 与 facetproof.demo lens-edit",
+      "success": "正交与透视图版保持对应拾取",
+      "failure": "拒绝违反规则的状态或输入，事务不提交",
+      "verification": "python3 -m facetproof.demo --flow lens-edit",
+      "steps": [
+        "通过公开领域入口接收输入",
+        "执行领域规则与持久化或图版处理",
+        "返回可观察结果并检查失败路径"
+      ],
+      "module_ids": [
+        "assemblies",
+        "camera",
+        "database"
+      ]
+    },
+    {
+      "id": "seal-closure",
+      "name": "依赖冻结",
+      "entry": "HTTP /facet/v1 与 facetproof.demo seal-closure",
+      "success": "旧摘要和像素保持不变",
+      "failure": "拒绝违反规则的状态或输入，事务不提交",
+      "verification": "python3 -m facetproof.demo --flow seal-closure",
+      "steps": [
+        "通过公开领域入口接收输入",
+        "执行领域规则与持久化或图版处理",
+        "返回可观察结果并检查失败路径"
+      ],
+      "module_ids": [
+        "seals",
+        "pigments",
+        "database"
+      ]
+    },
+    {
+      "id": "exposure-submit",
+      "name": "幂等曝光",
+      "entry": "HTTP /facet/v1 与 facetproof.demo exposure-submit",
+      "success": "重发复用、异参冲突",
+      "failure": "拒绝违反规则的状态或输入，事务不提交",
+      "verification": "python3 -m facetproof.demo --flow exposure-submit",
+      "steps": [
+        "通过公开领域入口接收输入",
+        "执行领域规则与持久化或图版处理",
+        "返回可观察结果并检查失败路径"
+      ],
+      "module_ids": [
+        "exposures",
+        "planner",
+        "database"
+      ]
+    },
+    {
+      "id": "render-plates",
+      "name": "多通道渲染",
+      "entry": "HTTP /facet/v1 与 facetproof.demo render-plates",
+      "success": "六个通道及像素覆盖统计",
+      "failure": "拒绝违反规则的状态或输入，事务不提交",
+      "verification": "python3 -m facetproof.demo --flow render-plates",
+      "steps": [
+        "通过公开领域入口接收输入",
+        "执行领域规则与持久化或图版处理",
+        "返回可观察结果并检查失败路径"
+      ],
+      "module_ids": [
+        "planner",
+        "clipping",
+        "raster",
+        "passes",
+        "worker"
+      ]
+    },
+    {
+      "id": "cancel-exposure",
+      "name": "取消曝光",
+      "entry": "HTTP /facet/v1 与 facetproof.demo cancel-exposure",
+      "success": "取消状态与无成功图版",
+      "failure": "拒绝违反规则的状态或输入，事务不提交",
+      "verification": "python3 -m facetproof.demo --flow cancel-exposure",
+      "steps": [
+        "通过公开领域入口接收输入",
+        "执行领域规则与持久化或图版处理",
+        "返回可观察结果并检查失败路径"
+      ],
+      "module_ids": [
+        "exposures",
+        "worker",
+        "plates"
+      ]
+    },
+    {
+      "id": "retry-exposure",
+      "name": "失败重试",
+      "entry": "HTTP /facet/v1 与 facetproof.demo retry-exposure",
+      "success": "尝试号增长且至多一张图版",
+      "failure": "拒绝违反规则的状态或输入，事务不提交",
+      "verification": "python3 -m facetproof.demo --flow retry-exposure",
+      "steps": [
+        "通过公开领域入口接收输入",
+        "执行领域规则与持久化或图版处理",
+        "返回可观察结果并检查失败路径"
+      ],
+      "module_ids": [
+        "exposures",
+        "worker",
+        "plates"
+      ]
+    },
+    {
+      "id": "verify-plate",
+      "name": "图版校验",
+      "entry": "HTTP /facet/v1 与 facetproof.demo verify-plate",
+      "success": "哈希或尺寸错误可观察",
+      "failure": "拒绝违反规则的状态或输入，事务不提交",
+      "verification": "python3 -m facetproof.demo --flow verify-plate",
+      "steps": [
+        "通过公开领域入口接收输入",
+        "执行领域规则与持久化或图版处理",
+        "返回可观察结果并检查失败路径"
+      ],
+      "module_ids": [
+        "plates",
+        "blobs",
+        "png"
+      ]
+    },
+    {
+      "id": "pixel-pick",
+      "name": "像素拾取",
+      "entry": "HTTP /facet/v1 与 facetproof.demo pixel-pick",
+      "success": "像素返回对象与距离",
+      "failure": "拒绝违反规则的状态或输入，事务不提交",
+      "verification": "python3 -m facetproof.demo --flow pixel-pick",
+      "steps": [
+        "通过公开领域入口接收输入",
+        "执行领域规则与持久化或图版处理",
+        "返回可观察结果并检查失败路径"
+      ],
+      "module_ids": [
+        "plates",
+        "passes",
+        "planner"
+      ]
+    },
+    {
+      "id": "compare-plates",
+      "name": "图版比对",
+      "entry": "HTTP /facet/v1 与 facetproof.demo compare-plates",
+      "success": "色差深差和轮廓差指标",
+      "failure": "拒绝违反规则的状态或输入，事务不提交",
+      "verification": "python3 -m facetproof.demo --flow compare-plates",
+      "steps": [
+        "通过公开领域入口接收输入",
+        "执行领域规则与持久化或图版处理",
+        "返回可观察结果并检查失败路径"
+      ],
+      "module_ids": [
+        "comparison",
+        "plates",
+        "blobs"
+      ]
+    },
+    {
+      "id": "proof-decision",
+      "name": "审阅决定",
+      "entry": "HTTP /facet/v1 与 facetproof.demo proof-decision",
+      "success": "决定状态与冻结摘要",
+      "failure": "拒绝违反规则的状态或输入，事务不提交",
+      "verification": "python3 -m facetproof.demo --flow proof-decision",
+      "steps": [
+        "通过公开领域入口接收输入",
+        "执行领域规则与持久化或图版处理",
+        "返回可观察结果并检查失败路径"
+      ],
+      "module_ids": [
+        "proofs",
+        "plates",
+        "blobs"
+      ]
+    },
+    {
+      "id": "quarantine-plate",
+      "name": "隔离与清退",
+      "entry": "HTTP /facet/v1 与 facetproof.demo quarantine-plate",
+      "success": "审阅失效并拒绝交付",
+      "failure": "拒绝违反规则的状态或输入，事务不提交",
+      "verification": "python3 -m facetproof.demo --flow quarantine-plate",
+      "steps": [
+        "通过公开领域入口接收输入",
+        "执行领域规则与持久化或图版处理",
+        "返回可观察结果并检查失败路径"
+      ],
+      "module_ids": [
+        "plates",
+        "proofs",
+        "database"
+      ]
+    },
+    {
+      "id": "recover-lease",
+      "name": "租约恢复",
+      "entry": "HTTP /facet/v1 与 facetproof.demo recover-lease",
+      "success": "恢复排队与新尝试",
+      "failure": "拒绝违反规则的状态或输入，事务不提交",
+      "verification": "python3 -m facetproof.demo --flow recover-lease",
+      "steps": [
+        "通过公开领域入口接收输入",
+        "执行领域规则与持久化或图版处理",
+        "返回可观察结果并检查失败路径"
+      ],
+      "module_ids": [
+        "exposures",
+        "worker",
+        "database"
+      ]
+    },
+    {
+      "id": "export-bundle",
+      "name": "确定性导出",
+      "entry": "HTTP /facet/v1 与 facetproof.demo export-bundle",
+      "success": "ZIP 包包含全部通道及快照",
+      "failure": "拒绝违反规则的状态或输入，事务不提交",
+      "verification": "python3 -m facetproof.demo --flow export-bundle",
+      "steps": [
+        "通过公开领域入口接收输入",
+        "执行领域规则与持久化或图版处理",
+        "返回可观察结果并检查失败路径"
+      ],
+      "module_ids": [
+        "bundles",
+        "plates",
+        "blobs",
+        "seals"
+      ]
+    }
+  ],
+  "complexity": {
+    "mechanisms": [
+      "capacity",
+      "concurrency",
+      "delete_removal",
+      "error_propagation",
+      "export_freeze",
+      "idempotency",
+      "lineage",
+      "policy_rules",
+      "recovery_rollback",
+      "resource_lifecycle",
+      "snapshot_consistency",
+      "state_machine",
+      "time_semantics",
+      "versioning_audit"
+    ]
+  }
+}
